@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    
-    public bool isAlive = false;
-    public int numNeighbours = 0;
 
-    public void SetAlive (bool alive) {
+    public bool isAlive = false;
+    public int numNeighbors = 0;
+
+    public void SetAlive(bool alive)
+    {
         isAlive = alive;
 
         if (alive)

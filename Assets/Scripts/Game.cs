@@ -5,7 +5,7 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
 
-    private static int SCREEN_WIDTH = 64;
+    private static int SCREEN_WIDTH = 86;
     private static int SCREEN_HEIGHT = 48;
 
     Cell[,] grid = new Cell[SCREEN_WIDTH, SCREEN_HEIGHT];
@@ -17,18 +17,33 @@ public class Game : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
-    void PlaceCells ()
+    void PlaceCells()
     {
         for (int y = 0; y < SCREEN_HEIGHT; y++)
         {
             for (int x = 0; x < SCREEN_WIDTH; x++)
             {
-                Cell cell = Instantiate(Resources.Load("Prefabs/cell.png", typeof(Cell)), new Vector2 (x, y), Quaternion.identity) as Cell;
+                Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
                 grid[x, y] = cell;
+                grid[x, y].SetAlive(RandomAliveCell()); // initial grid with random alive cells
             }
+        }
+        Camera.main.backgroundColor = Color.white;
+    }
+
+    bool RandomAliveCell()
+    {
+        int rand = UnityEngine.Random.Range(0, 100);
+        if (rand > 85)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
