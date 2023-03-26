@@ -6,23 +6,27 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     public string Scene;
-    public enum GameMode
-    {
-        Custom,
-        Random,
-    }
-
     public void StartRandomGame()
     {
-        GameMode gameMode = GameMode.Random;
-        PlayerPrefs.SetInt("GameMode", (int)gameMode);
+        GameMode.Mode = GameMode.Modes.Random;
         SceneManager.LoadScene(Scene);
     }
 
     public void StartCustomGame()
     {
-        GameMode gameMode = GameMode.Custom;
-        PlayerPrefs.SetInt("GameMode", (int)gameMode);
+        GameMode.Mode = GameMode.Modes.Custom;
+        SceneManager.LoadScene(Scene);
+    }
+
+    public void StartExplodingGame()
+    {
+        GameMode.Mode = GameMode.Modes.Exploding;
+        SceneManager.LoadScene(Scene);
+    }
+
+    public void StartReverseGame()
+    {
+        GameMode.Mode = GameMode.Modes.Reverse;
         SceneManager.LoadScene(Scene);
     }
 
