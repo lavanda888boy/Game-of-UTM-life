@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public string firstScene;
+    public string Scene;
     public enum GameMode
     {
         Custom,
@@ -28,13 +28,18 @@ public class Menu : MonoBehaviour
     {
         GameMode gameMode = GameMode.Random;
         PlayerPrefs.SetInt("GameMode", (int)gameMode);
-        SceneManager.LoadScene(firstScene);
+        SceneManager.LoadScene(Scene);
     }
 
     public void StartCustomGame()
     {
         GameMode gameMode = GameMode.Custom;
         PlayerPrefs.SetInt("GameMode", (int)gameMode);
-        SceneManager.LoadScene(firstScene);
+        SceneManager.LoadScene(Scene);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(Scene);
     }
 }
