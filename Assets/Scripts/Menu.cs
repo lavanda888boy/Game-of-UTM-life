@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
     public string firstScene;
     public enum GameMode
     {
-        Click,
+        Custom,
         Random,
     }
     void Start()
@@ -31,9 +31,9 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(firstScene);
     }
 
-    public void StartClickGame()
+    public void StartCustomGame()
     {
-        GameMode gameMode = GameMode.Click;
+        GameMode gameMode = GameMode.Custom;
         PlayerPrefs.SetInt("GameMode", (int)gameMode);
         SceneManager.LoadScene(firstScene);
     }

@@ -9,13 +9,12 @@ public class Game : MonoBehaviour
     private static int SCREEN_HEIGHT = 48;
     public float speed = 0.05f;
     private float timer = 0.0f;
-    private bool ModeSelect = false;
 
     Cell[,] grid = new Cell[SCREEN_WIDTH, SCREEN_HEIGHT];
 
     public enum GameMode
     {
-        Click,
+        Custom,
         Random,
     }
     public GameMode gameMode;
@@ -23,25 +22,26 @@ public class Game : MonoBehaviour
     void Start()
     {
         gameMode = (GameMode)PlayerPrefs.GetInt("GameMode");
-        Debug.Log(gameMode);
         Camera.main.backgroundColor = Color.white;
         if (gameMode == GameMode.Random)
         {
-            Debug.Log("Random");
             PlaceCellsRandomly();
-        }
-        else if (gameMode == GameMode.Click)
-        {
-            Debug.Log("Click");
         }
 
     }
 
     void Update()
     {
-        if (gameMode == GameMode.Click)
+        if (gameMode == GameMode.Custom)
         {
-            PlaceCellsMouseClick();
+            // while space is not pressed, place cells with mouse Custom
+            if (Input.GetKey(KeyCode.Space))
+            {
+                PopulateDeadCells();
+                gameMode = GameMode.Random;
+            }
+            PlaceCellsMouseCustom();
+
         }
         else if (gameMode == GameMode.Random)
         {
@@ -72,22 +72,40 @@ public class Game : MonoBehaviour
         Camera.main.backgroundColor = Color.white;
     }
 
-    void PlaceCellsMouseClick()
+    void PlaceCellsMouseCustom()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            int mouseX = Mathf.FloorToInt(mousePosition.x); // mouse position on x axis
-            int mouseY = Mathf.FloorToInt(mousePosition.y); // mouse position on y axis
+        // if (Input.GetMouseButton(0))
+        // {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        int mouseX = Mathf.FloorToInt(mousePosition.x); // mouse position on x axis
+        int mouseY = Mathf.FloorToInt(mousePosition.y); // mouse position on y axis
 
-            if (mouseX >= 0 && mouseX < SCREEN_WIDTH && mouseY >= 0 && mouseY < SCREEN_HEIGHT)
+        if (mouseX >= 0 && mouseX < SCREEN_WIDTH && mouseY >= 0 && mouseY < SCREEN_HEIGHT)
+        {
+            // create a new cell if it doesn't exist already
+            if (grid[mouseX, mouseY] == null)
             {
-                // create a new cell only if it doesn't exist already
-                if (grid[mouseX, mouseY] == null)
+                Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(mouseX, mouseY), Quaternion.identity) as Cell;
+                grid[mouseX, mouseY] = cell;
+            }
+
+            // set the cell as alive
+            grid[mouseX, mouseY].SetAlive(true);
+            // }
+        }
+    }
+
+    void PopulateDeadCells()
+    {
+        for (int y = 0; y < SCREEN_HEIGHT; y++)
+        {
+            for (int x = 0; x < SCREEN_WIDTH; x++)
+            {
+                if (grid[x, y] == null)
                 {
-                    Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(mouseX, mouseY), Quaternion.identity) as Cell;
-                    grid[mouseX, mouseY] = cell;
-                    grid[mouseX, mouseY].SetAlive(true);
+                    Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
+                    grid[x, y] = cell;
+                    grid[x, y].SetAlive(false);
                 }
             }
         }
