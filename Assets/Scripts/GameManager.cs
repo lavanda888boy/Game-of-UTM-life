@@ -46,7 +46,9 @@ public class GameManager : MonoBehaviour
             {
                 timer = 0.0f;
                 grid.CountNeighbors();
-                populationController.PopulationControl(grid);
+                if (ToggleHandler.ExplosionHandler)
+                    populationController.ExplosionRules(grid);
+                populationController.GeneralRules(grid);
                 updateCounter++;
             }
             else

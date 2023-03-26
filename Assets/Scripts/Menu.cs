@@ -32,6 +32,7 @@ public class Menu : MonoBehaviour
 
     public void BackToMenu()
     {
+        ToggleHandler.ResetToggles();
         SetNrGenerations.nrOfGenerations = 0;
         SceneManager.LoadScene(Scene);
     }
