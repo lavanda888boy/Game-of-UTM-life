@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-
     private static int SCREEN_WIDTH = 86;
     private static int SCREEN_HEIGHT = 48;
     public float speed = 0.05f;
     private float timer = 0.0f;
+    private int updateCounter = 0;
+    private int nrOfGenerations = int.MaxValue;
 
     Cell[,] grid = new Cell[SCREEN_WIDTH, SCREEN_HEIGHT];
 
@@ -32,9 +33,13 @@ public class Game : MonoBehaviour
 
     void Update()
     {
+        nrOfGenerations = (SetNrGenerations.nrOfGenerations != 0) ? SetNrGenerations.nrOfGenerations : nrOfGenerations;
+        if (updateCounter >= nrOfGenerations)
+        {
+            return;
+        }
         if (gameMode == GameMode.Custom)
         {
-            // while space is not pressed, place cells with mouse Custom
             if (Input.GetKey(KeyCode.Space))
             {
                 PopulateDeadCells();
@@ -50,12 +55,18 @@ public class Game : MonoBehaviour
                 timer = 0.0f;
                 CountNeighbors();
                 PopulationControl();
+                updateCounter++;
             }
             else
             {
                 timer += Time.deltaTime;
             }
         }
+    }
+
+    public void StartSimulation()
+    {
+        Update();
     }
 
     void PlaceCellsRandomly()
@@ -74,24 +85,24 @@ public class Game : MonoBehaviour
 
     void PlaceCellsMouseCustom()
     {
-        // if (Input.GetMouseButton(0))
-        // {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        int mouseX = Mathf.FloorToInt(mousePosition.x); // mouse position on x axis
-        int mouseY = Mathf.FloorToInt(mousePosition.y); // mouse position on y axis
-
-        if (mouseX >= 0 && mouseX < SCREEN_WIDTH && mouseY >= 0 && mouseY < SCREEN_HEIGHT)
+        if (Input.GetMouseButton(0))
         {
-            // create a new cell if it doesn't exist already
-            if (grid[mouseX, mouseY] == null)
-            {
-                Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(mouseX, mouseY), Quaternion.identity) as Cell;
-                grid[mouseX, mouseY] = cell;
-            }
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            int mouseX = Mathf.FloorToInt(mousePosition.x); // mouse position on x axis
+            int mouseY = Mathf.FloorToInt(mousePosition.y); // mouse position on y axis
 
-            // set the cell as alive
-            grid[mouseX, mouseY].SetAlive(true);
-            // }
+            if (mouseX >= 0 && mouseX < SCREEN_WIDTH && mouseY >= 0 && mouseY < SCREEN_HEIGHT)
+            {
+                // create a new cell if it doesn't exist already
+                if (grid[mouseX, mouseY] == null)
+                {
+                    Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(mouseX, mouseY), Quaternion.identity) as Cell;
+                    grid[mouseX, mouseY] = cell;
+                }
+
+                // set the cell as alive
+                grid[mouseX, mouseY].SetAlive(true);
+            }
         }
     }
 
@@ -209,6 +220,8 @@ public class Game : MonoBehaviour
             }
         }
     }
+
+
 
     void PopulationControl()
     {

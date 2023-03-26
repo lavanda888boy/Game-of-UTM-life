@@ -11,14 +11,6 @@ public class Cell : MonoBehaviour
     public void SetAlive(bool alive)
     {
         isAlive = alive;
-
-        if (alive)
-        {
-            GetComponent<SpriteRenderer>().enabled = true;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().enabled = false;
-        }
+        GetComponent<SpriteRenderer>().enabled = alive;
     }
 }

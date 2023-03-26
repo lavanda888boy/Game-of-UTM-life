@@ -5,23 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public string Scene;
     public enum GameMode
     {
         Custom,
         Random,
-    }
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void StartRandomGame()
@@ -40,6 +28,7 @@ public class Menu : MonoBehaviour
 
     public void BackToMenu()
     {
+        SetNrGenerations.nrOfGenerations = 0;
         SceneManager.LoadScene(Scene);
     }
 }
