@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
                     toxicZone.ToxicZone(grid, 10, 5, 25, 20);
                     if (updateCounter % 5 == 0) populationController.KillRandomToxicCells(grid);
                 }
-                else if (!ToggleHandler.FriendlyZone) toxicZone.ResetZone(grid, Color.green);
+                else toxicZone.ResetZone(grid, Color.green);
                 if (ToggleHandler.FriendlyZone)
                     friendlyZone.FriendlyZone(grid, 40, 30, 66, 40);
                 else friendlyZone.ResetZone(grid, Color.blue);

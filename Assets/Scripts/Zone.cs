@@ -26,8 +26,7 @@ public class Zone : MonoBehaviour
         {
             for (int x = x1; x < x2; x++)
             {
-                // if cell is alive, make it poisoned and change color to green
-                if (grid.GetCells()[x, y].isAlive)
+                if (!grid.GetCells()[x, y].isAlive)
                 {
                     grid.GetCells()[x, y].isFriendly = true;
                     grid.GetCells()[x, y].SetColor(Color.blue);
@@ -42,7 +41,6 @@ public class Zone : MonoBehaviour
         {
             for (int x = 0; x < grid.width; x++)
             {
-                // if cell is alive, make it poisoned and change color to blue
                 if (grid.GetCells()[x, y].isAlive)
                 {
                     if (color == Color.green && grid.GetCells()[x, y].isPoisoned == true)
