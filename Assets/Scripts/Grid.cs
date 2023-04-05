@@ -36,12 +36,40 @@ public class Grid : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
-                cells[x, y] = cell;
-                // random variable to determine if cell is alive or not
-                int rand = Random.Range(0, 100);
-                bool isAlive = rand > 65 ? true : false;
-                cells[x, y].SetAlive(isAlive); // initial grid with random alive cells
+                int rand;
+                bool isAlive;
+                
+                // initialize poison cells within an certain area
+                if ((y >= 28 && y <= 40) && (x >= 38 && x <= 50))
+                {
+                    rand = Random.Range(0, 100);
+                    isAlive = rand > 65 ? true : false;
+                    
+                    rand = Random.Range(0, 100);
+                    bool isPoisoned = rand > 60 ? true : false;
+                    Cell c;
+                    
+                    if (isPoisoned)
+                    {
+                        c = Instantiate(Resources.Load("Prefabs/green_cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
+                    }
+                    else
+                    {
+                        c = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
+                    }
+                    
+                    cells[x, y] = c;
+                    cells[x, y].SetAlive(isAlive);
+                }
+                else
+                {
+                    Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
+                    cells[x, y] = cell;
+                    // random variable to determine if cell is alive or not
+                    rand = Random.Range(0, 100);
+                    isAlive = rand > 65 ? true : false;
+                    cells[x, y].SetAlive(isAlive); // initial grid with random alive cells
+                }
             }
         }
         Camera.main.backgroundColor = Color.white;
