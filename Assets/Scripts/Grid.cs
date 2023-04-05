@@ -40,51 +40,20 @@ public class Grid : MonoBehaviour
             {
                 int rand;
                 bool isAlive;
-                
-                // initialize poison cells within an certain area
-                if ((y >= 28 && y <= 40) && (x >= 38 && x <= 50))
-                {
-                    rand = Random.Range(0, 100);
-                    isAlive = rand > 65 ? true : false;
-                    
-                    rand = Random.Range(0, 100);
-                    bool isPoisoned = rand > 60 ? true : false;
-                    Cell c;
-                    
-                    if (isPoisoned)
-                    {
-                        c = Instantiate(Resources.Load("Prefabs/green_cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
-                    }
-                    else
-                    {
-                        c = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
-                    }
-                    
-                    if (isAlive && !isPoisoned)
-                    {
-                        c.color = "black";
-                    } else if (isAlive && isPoisoned)
-                    {
-                        c.color = "green";
-                    }
-                    
-                    cells[x, y] = c;
-                    cells[x, y].SetAlive(isAlive);
-                }
-                else
-                {
-                    Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
-                    cells[x, y] = cell;
-                    // random variable to determine if cell is alive or not
-                    rand = Random.Range(0, 100);
-                    isAlive = rand > 65 ? true : false;
-                    cells[x, y].SetAlive(isAlive); // initial grid with random alive cells
+                Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
+                cells[x, y] = cell;
+                // random variable to determine if cell is alive or not
+                rand = Random.Range(0, 100);
+                isAlive = rand > 65 ? true : false;
+                cells[x, y].SetAlive(isAlive); // initial grid with random alive cells
 
-                    if (isAlive)
-                    {
-                        cells[x, y].color = "black";
-                    }
+                if (isAlive)
+                {
+                    // MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+                    // materialPropertyBlock.SetColor("_Color", Color.black);
+                    // cells[x, y].GetComponent<Renderer>().SetPropertyBlock(materialPropertyBlock);
                 }
+                // }
             }
         }
         Camera.main.backgroundColor = Color.white;
@@ -138,17 +107,11 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int numNeighbors = 0;
-                int numPoisonedNeighbors = 0;
                 // North
                 if (y + 1 < height)
                 {
                     if (cells[x, y + 1].isAlive)
                     {
-                        if (String.Equals(cells[x, y + 1].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -157,11 +120,6 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x + 1, y + 1].isAlive)
                     {
-                        if (String.Equals(cells[x + 1, y + 1].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -170,11 +128,6 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x + 1, y].isAlive)
                     {
-                        if (String.Equals(cells[x + 1, y].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -183,11 +136,6 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x + 1, y - 1].isAlive)
                     {
-                        if (String.Equals(cells[x + 1, y - 1].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -196,11 +144,6 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x, y - 1].isAlive)
                     {
-                        if (String.Equals(cells[x, y - 1].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -209,11 +152,6 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x - 1, y - 1].isAlive)
                     {
-                        if (String.Equals(cells[x - 1, y - 1].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -222,11 +160,6 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x - 1, y].isAlive)
                     {
-                        if (String.Equals(cells[x - 1, y].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
@@ -235,16 +168,10 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x - 1, y + 1].isAlive)
                     {
-                        if (String.Equals(cells[x - 1, y + 1].color, "green"))
-                        {
-                            numPoisonedNeighbors++;
-                        }
-
                         numNeighbors++;
                     }
                 }
                 cells[x, y].numNeighbors = numNeighbors;
-                cells[x, y].numPoisonedNeighbors = numPoisonedNeighbors;
             }
         }
     }

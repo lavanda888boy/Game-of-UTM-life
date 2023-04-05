@@ -270,7 +270,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Friendly
+  m_Text: Toxic
 --- !u!222 &198816788
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1518,7 +1518,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910931277}
         m_TargetAssemblyTypeName: ToggleHandler, Assembly-CSharp
-        m_MethodName: FriendlyZoneToggle
+        m_MethodName: ToxicZoneToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

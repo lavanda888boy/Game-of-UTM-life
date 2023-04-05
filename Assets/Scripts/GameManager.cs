@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private int nrOfGenerations = int.MaxValue;
     Grid grid = new Grid(SCREEN_WIDTH, SCREEN_HEIGHT);
     PopulationController populationController = new PopulationController();
+    Zone toxicZone = new Zone();
+    Zone friendlyZone = new Zone();
     void Start()
     {
         Camera.main.backgroundColor = Color.white;
@@ -49,6 +51,12 @@ public class GameManager : MonoBehaviour
                 if (ToggleHandler.ExplosionHandler)
                     populationController.ExplosionRules(grid);
                 populationController.GeneralRules(grid);
+                if (ToggleHandler.ToxicZone)
+                    toxicZone.PopulateZone(grid, 10, 5, 20, 20, Color.green);
+                else toxicZone.ResetZone(grid, 10, 5, 20, 20);
+                if (ToggleHandler.FriendlyZone)
+                    friendlyZone.PopulateZone(grid, 20, 20, 40, 40, Color.blue);
+                else friendlyZone.ResetZone(grid, 20, 20, 40, 40);
                 updateCounter++;
             }
             else

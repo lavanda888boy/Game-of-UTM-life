@@ -5,13 +5,17 @@ using UnityEngine;
 public class ToggleHandler : MonoBehaviour
 {
     public static bool ExplosionHandler = false;
+    public static bool ToxicZone = false;
     public static bool FriendlyZone = false;
-    public static bool DeadlyZone = false;
-    public static bool BarrierZone = false;
 
     public void ExplosionToggle()
     {
         ExplosionHandler = !ExplosionHandler;
+    }
+
+    public void ToxicZoneToggle()
+    {
+        ToxicZone = !ToxicZone;
     }
 
     public void FriendlyZoneToggle()
@@ -19,21 +23,10 @@ public class ToggleHandler : MonoBehaviour
         FriendlyZone = !FriendlyZone;
     }
 
-    public void DeadlyZoneToggle()
-    {
-        DeadlyZone = !DeadlyZone;
-    }
-
-    public void BarrierZoneToggle()
-    {
-        BarrierZone = !BarrierZone;
-    }
-
     public static void ResetToggles()
     {
         ExplosionHandler = false;
+        ToxicZone = false;
         FriendlyZone = false;
-        DeadlyZone = false;
-        BarrierZone = false;
     }
 }
