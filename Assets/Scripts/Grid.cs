@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Grid : MonoBehaviour
 {
@@ -58,6 +60,14 @@ public class Grid : MonoBehaviour
                         c = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
                     }
                     
+                    if (isAlive && !isPoisoned)
+                    {
+                        c.color = "black";
+                    } else if (isAlive && isPoisoned)
+                    {
+                        c.color = "green";
+                    }
+                    
                     cells[x, y] = c;
                     cells[x, y].SetAlive(isAlive);
                 }
@@ -69,6 +79,11 @@ public class Grid : MonoBehaviour
                     rand = Random.Range(0, 100);
                     isAlive = rand > 65 ? true : false;
                     cells[x, y].SetAlive(isAlive); // initial grid with random alive cells
+
+                    if (isAlive)
+                    {
+                        cells[x, y].color = "black";
+                    }
                 }
             }
         }
@@ -94,6 +109,7 @@ public class Grid : MonoBehaviour
 
                 // set the cell as alive
                 cells[mouseX, mouseY].SetAlive(true);
+                cells[mouseX, mouseY].color = "black";
             }
         }
     }
@@ -109,6 +125,7 @@ public class Grid : MonoBehaviour
                     Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
                     cells[x, y] = cell;
                     cells[x, y].SetAlive(false);
+                    cells[x, y].color = "white";
                 }
             }
         }
@@ -121,11 +138,17 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int numNeighbors = 0;
+                int numPoisonedNeighbors = 0;
                 // North
                 if (y + 1 < height)
                 {
                     if (cells[x, y + 1].isAlive)
                     {
+                        if (String.Equals(cells[x, y + 1].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
@@ -134,6 +157,11 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x + 1, y + 1].isAlive)
                     {
+                        if (String.Equals(cells[x + 1, y + 1].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
@@ -142,14 +170,24 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x + 1, y].isAlive)
                     {
+                        if (String.Equals(cells[x + 1, y].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
                 // South East
                 if (y - 1 >= 0 && x + 1 < width)
                 {
-                    if (cells[x + 1, y - 1].isAlive)
+                    if (cells[x, y + 1].isAlive)
                     {
+                        if (String.Equals(cells[x, y + 1].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
@@ -158,6 +196,11 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x, y - 1].isAlive)
                     {
+                        if (String.Equals(cells[x, y - 1].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
@@ -166,6 +209,11 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x - 1, y - 1].isAlive)
                     {
+                        if (String.Equals(cells[x - 1, y - 1].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
@@ -174,6 +222,11 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x - 1, y].isAlive)
                     {
+                        if (String.Equals(cells[x - 1, y].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
@@ -182,10 +235,16 @@ public class Grid : MonoBehaviour
                 {
                     if (cells[x - 1, y + 1].isAlive)
                     {
+                        if (String.Equals(cells[x - 1, y + 1].color, "green"))
+                        {
+                            numPoisonedNeighbors++;
+                        }
+
                         numNeighbors++;
                     }
                 }
                 cells[x, y].numNeighbors = numNeighbors;
+                cells[x, y].numPoisonedNeighbors = numPoisonedNeighbors;
             }
         }
     }

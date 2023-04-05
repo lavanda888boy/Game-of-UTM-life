@@ -7,6 +7,8 @@ public class Cell : MonoBehaviour
 
     public bool isAlive = false;
     public int numNeighbors = 0;
+    public int numPoisonedNeighbors = 0;
+    public string color = "white";
 
     public void SetAlive(bool alive)
     {
