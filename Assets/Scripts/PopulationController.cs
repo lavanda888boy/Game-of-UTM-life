@@ -100,7 +100,11 @@ public class PopulationController : MonoBehaviour
                 }
                 else
                 {
-                    if (cells[x, y].numNeighbors == 3)
+                    if ((x > x1 && x < x2) && (y > y1 && y < y2))
+                    {
+                        cells[x, y].SetAlive(true);
+                        cells[x, y].SetColor(Color.blue);
+                    } else if (cells[x, y].numNeighbors == 3)
                     {
                         cells[x, y].SetAlive(true);
                     }
