@@ -23,7 +23,6 @@ public class PopulationController : MonoBehaviour
                     if (cells[x, y].numNeighbors != 2 && cells[x, y].numNeighbors != 3)
                     {
                         cells[x, y].SetAlive(false);
-                        cells[x, y].color = "white";
                     }
                 }
                 else
@@ -31,7 +30,6 @@ public class PopulationController : MonoBehaviour
                     if (cells[x, y].numNeighbors == 3)
                     {
                         cells[x, y].SetAlive(true);
-                        cells[x, y].color = "black";
                     }
                 }
             }
@@ -59,7 +57,6 @@ public class PopulationController : MonoBehaviour
 
                         // set the four neighboring cells to alive
                         cells[x + 1, y].SetAlive(true);
-                        cells[x, y].color = "black";
                         cells[x - 1, y].SetAlive(true);
                         cells[x - 1, y].color = "black";
                         cells[x, y + 1].SetAlive(true);
@@ -96,11 +93,9 @@ public class PopulationController : MonoBehaviour
                     if (cells[x, y].numNeighbors != 2 && cells[x, y].numNeighbors != 3)
                     {
                         cells[x, y].SetAlive(false);
-                        cells[x, y].color = "white";
                     }
                     else if (cells[x, y].numNeighbors > 3)
                     {
-                        cells[x, y].color = "green";
                     }
                 }
                 else
@@ -108,7 +103,6 @@ public class PopulationController : MonoBehaviour
                     if (cells[x, y].numNeighbors == 3)
                     {
                         cells[x, y].SetAlive(true);
-                        cells[x, y].color = "black";
                     }
                 }
             }
