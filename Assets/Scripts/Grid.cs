@@ -181,9 +181,9 @@ public class Grid : MonoBehaviour
                 // South East
                 if (y - 1 >= 0 && x + 1 < width)
                 {
-                    if (cells[x, y + 1].isAlive)
+                    if (cells[x + 1, y - 1].isAlive)
                     {
-                        if (String.Equals(cells[x, y + 1].color, "green"))
+                        if (String.Equals(cells[x + 1, y - 1].color, "green"))
                         {
                             numPoisonedNeighbors++;
                         }
