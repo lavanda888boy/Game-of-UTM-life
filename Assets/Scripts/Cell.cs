@@ -8,8 +8,7 @@ public class Cell : MonoBehaviour
     public bool isAlive = false;
     public int numNeighbors = 0;
     public int numPoisonedNeighbors = 0;
-    // public Color color;
-    public string color = "white";
+    public int numFriendlyNeighbors = 0;
     public bool isPoisoned = false;
     public bool isFriendly = false;
 

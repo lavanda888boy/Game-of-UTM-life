@@ -78,7 +78,6 @@ public class Grid : MonoBehaviour
 
                 // set the cell as alive
                 cells[mouseX, mouseY].SetAlive(true);
-                cells[mouseX, mouseY].color = "black";
             }
         }
     }
@@ -94,7 +93,6 @@ public class Grid : MonoBehaviour
                     Cell cell = Instantiate(Resources.Load("Prefabs/cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
                     cells[x, y] = cell;
                     cells[x, y].SetAlive(false);
-                    cells[x, y].color = "white";
                 }
             }
         }
@@ -107,71 +105,68 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int numNeighbors = 0;
+                int numPoisonedNeighbors = 0;
+                int numFriendlyNeighbors = 0;
+
                 // North
                 if (y + 1 < height)
                 {
-                    if (cells[x, y + 1].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x, y + 1].isAlive) numNeighbors++;
+                    if (cells[x, y + 1].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x, y + 1].isFriendly) numFriendlyNeighbors++;
                 }
                 // North East
                 if (y + 1 < height && x + 1 < width)
                 {
-                    if (cells[x + 1, y + 1].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x + 1, y + 1].isAlive) numNeighbors++;
+                    if (cells[x + 1, y + 1].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x + 1, y + 1].isFriendly) numFriendlyNeighbors++;
                 }
                 // East
                 if (x + 1 < width)
                 {
-                    if (cells[x + 1, y].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x + 1, y].isAlive) numNeighbors++;
+                    if (cells[x + 1, y].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x + 1, y].isFriendly) numFriendlyNeighbors++;
                 }
                 // South East
                 if (y - 1 >= 0 && x + 1 < width)
                 {
-                    if (cells[x + 1, y - 1].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x + 1, y - 1].isAlive) numNeighbors++;
+                    if (cells[x + 1, y - 1].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x + 1, y - 1].isFriendly) numFriendlyNeighbors++;
                 }
                 // South
                 if (y - 1 >= 0)
                 {
-                    if (cells[x, y - 1].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x, y - 1].isAlive) numNeighbors++;
+                    if (cells[x, y - 1].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x, y - 1].isFriendly) numFriendlyNeighbors++;
                 }
                 // South West
                 if (y - 1 >= 0 && x - 1 >= 0)
                 {
-                    if (cells[x - 1, y - 1].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x - 1, y - 1].isAlive) numNeighbors++;
+                    if (cells[x - 1, y - 1].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x - 1, y - 1].isFriendly) numFriendlyNeighbors++;
                 }
                 // West
                 if (x - 1 >= 0)
                 {
-                    if (cells[x - 1, y].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x - 1, y].isAlive) numNeighbors++;
+                    if (cells[x - 1, y].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x - 1, y].isFriendly) numFriendlyNeighbors++;
                 }
                 // North West
                 if (y + 1 < height && x - 1 >= 0)
                 {
-                    if (cells[x - 1, y + 1].isAlive)
-                    {
-                        numNeighbors++;
-                    }
+                    if (cells[x - 1, y + 1].isAlive) numNeighbors++;
+                    if (cells[x - 1, y + 1].isPoisoned) numPoisonedNeighbors++;
+                    if (cells[x - 1, y + 1].isFriendly) numFriendlyNeighbors++;
                 }
                 cells[x, y].numNeighbors = numNeighbors;
+                cells[x, y].numPoisonedNeighbors = numPoisonedNeighbors;
+                cells[x, y].numFriendlyNeighbors = numFriendlyNeighbors;
             }
         }
     }

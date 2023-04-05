@@ -52,11 +52,14 @@ public class GameManager : MonoBehaviour
                     populationController.ExplosionRules(grid);
                 populationController.GeneralRules(grid);
                 if (ToggleHandler.ToxicZone)
-                    toxicZone.PopulateZone(grid, 10, 5, 25, 20, Color.green);
-                else toxicZone.ResetZone(grid, 10, 5, 25, 20);
+                {
+                    toxicZone.ToxicZone(grid, 10, 5, 25, 20);
+                    if (updateCounter % 5 == 0) populationController.KillRandomToxicCells(grid);
+                }
+                else if (!ToggleHandler.FriendlyZone) toxicZone.ResetZone(grid, Color.green);
                 if (ToggleHandler.FriendlyZone)
-                    friendlyZone.PopulateZone(grid, 40, 30, 66, 40, Color.blue);
-                else friendlyZone.ResetZone(grid, 40, 30, 66, 40);
+                    friendlyZone.FriendlyZone(grid, 40, 30, 66, 40);
+                else friendlyZone.ResetZone(grid, Color.blue);
                 updateCounter++;
             }
             else
