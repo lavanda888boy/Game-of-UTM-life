@@ -107,47 +107,5 @@ public class PopulationController : MonoBehaviour
                 }
             }
         }
-
-    }
-
-    public void ToxicRules(int x1, int y1, int x2, int y2, Grid grid)
-    {
-        // Rules
-        // 1. Any live cell with fewer than two live neighbors dies, as if caused by underpopulation.
-        // 2. Any live cell with two or three live neighbors lives on to the next generation.
-        // 3. Any live cell with more than three live neighbors dies, as if by overpopulation.
-        // 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
-        // 5. Any live cell with more than 3 neighbors becomes poisoned, and will die if it has fewer than 2 neighbors.
-        int height = grid.height;
-        int width = grid.width;
-        Cell[,] cells = grid.GetCells();
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (cells[x, y].isAlive)
-                {
-                    if (cells[x, y].numNeighbors != 2 && cells[x, y].numNeighbors != 3)
-                    {
-                        cells[x, y].SetAlive(false);
-                    }
-                    else if (cells[x, y].numNeighbors > 3)
-                    {
-                    }
-                }
-                else
-                {
-                    if ((x > x1 && x < x2) && (y > y1 && y < y2))
-                    {
-                        cells[x, y].SetAlive(true);
-                        cells[x, y].SetColor(Color.blue);
-                    }
-                    else if (cells[x, y].numNeighbors == 3)
-                    {
-                        cells[x, y].SetAlive(true);
-                    }
-                }
-            }
-        }
     }
 }
